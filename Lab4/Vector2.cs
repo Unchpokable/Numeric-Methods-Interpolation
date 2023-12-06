@@ -1,4 +1,6 @@
-﻿namespace Lab4
+﻿using System;
+
+namespace Lab4
 {
     public struct Vector2
     {

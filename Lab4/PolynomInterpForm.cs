@@ -15,16 +15,19 @@ using OxyPlot.Series;
 
 namespace Lab4
 {
-    public partial class Form1 : Form
+    public partial class PolynomInterpForm : Form
     {
-        public Form1()
+        public PolynomInterpForm(Form parent = null)
         {
+            _parent = parent;
             InitializeComponent();
             _validationTimer = new System.Timers.Timer();
             _validationTimer.Interval = 1000; 
             _validationTimer.AutoReset = false;
             _validationTimer.Elapsed += ValidationTimerElapsed;
             InterpolationSelect.DataSource = Enum.GetValues(typeof(InterpolationType));
+            InterpolationStepInput.Text = _interpolationStep.ToString(CultureInfo.InvariantCulture);
+            ToolTipProvider.SetToolTip(ShouldRestrictArgRange_CheckBox, "Если включен, ввод значения, выходящего за границы диапазона, заданного опорными точками, будет считаться ошибкой");
         }
 
         private void TextBoxTextChanged(object sender, EventArgs e)
@@ -42,12 +45,28 @@ namespace Lab4
 
         private System.Timers.Timer _validationTimer;
         private TextBox _lastTouchedTextbox;
-        private float _interpolationStep = 1e-3f;
+        private float _interpolationStep = 1e-1f;
         private Vector2[] _controlPoints;
+        private Form _parent;
 
         private void button1_Click(object sender, EventArgs e)
         {
             ValidateInput();
+            TempValuesList.Items.Clear();
+            if (!string.IsNullOrEmpty(InterpolationStepInput.Text))
+            {
+                if (!float.TryParse(InterpolationStepInput.Text, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out _interpolationStep))
+                {
+                    InterpolationStepInput.BackColor = Color.LightCoral;
+                    ErrProvider.SetError(InterpolationStepInput, "Неверное значение - не число");
+                    return;
+                }
+                else
+                {
+                    InterpolationStepInput.BackColor = System.Drawing.SystemColors.Window;
+                    ErrProvider.SetError(InterpolationStepInput, "");
+                }
+            }
 
             if (_controlPoints == null || _controlPoints.Length == 0) { return; }
 
@@ -70,7 +89,9 @@ namespace Lab4
 
             for (var x = minx; x <= maxx; x += _interpolationStep)
             {
-                lineSeries.Points.Add(new DataPoint(x, interpolator.Invoke(x)));
+                var interp_x = interpolator.Invoke(x);
+                lineSeries.Points.Add(new DataPoint(x, interp_x));
+                TempValuesList.Items.Add($"x = {x}, <interp>__P(x) = {interp_x}");
             }
 
             model.Series.Add(scatterSeries);
@@ -123,7 +144,7 @@ namespace Lab4
             XInputTextbox.BackColor = System.Drawing.SystemColors.Window;
             YInputTextbox.BackColor = System.Drawing.SystemColors.Window;
 
-            _controlPoints = Merge(xValues.Select(x => float.Parse(x, CultureInfo.InvariantCulture)).ToArray(),
+            _controlPoints = Utils.Merge(xValues.Select(x => float.Parse(x, CultureInfo.InvariantCulture)).ToArray(),
                 yValues.Select(y => float.Parse(y, CultureInfo.InvariantCulture)).ToArray());
         }
 
@@ -131,21 +152,6 @@ namespace Lab4
         {
             // Проверка наличия только цифр и точки
             return value.All(c => char.IsDigit(c) || c == '.' || c == '-');
-        }
-
-        private Vector2[] Merge(float[] xs, float[] ys)
-        {
-            if (xs.Length != ys.Length)
-                throw new ArgumentException("Unmatched sizes of argument arrays");
-
-            var result = new Vector2[xs.Length];
-
-            for (int i = 0; i < xs.Length; i++)
-            {
-                result[i] = new Vector2(xs[i], ys[i]);
-            }
-
-            return result;
         }
 
         private void loadFromFileButton_Click(object sender, EventArgs e)
@@ -180,8 +186,9 @@ namespace Lab4
                     XInputTextbox.Text = lines[0];
                     YInputTextbox.Text = lines[1];
 
-                    Vector2[] result = Merge(xs, ys);
+                    Vector2[] result = Utils.Merge(xs, ys);
                     lockInputTextbox.Checked = true;
+                    _controlPoints = result;
                 }
                 catch (Exception ex)
                 {
@@ -215,9 +222,47 @@ namespace Lab4
                     return Interpolation.OfLagrange(args);
                 case InterpolationType.Newton:
                     return Interpolation.OfNewton(args);
+                case InterpolationType.CubicSpline:
+                    return Interpolation.CubicSpline(args);
                 default:
                     return null;
             }
+        }
+
+        protected override void OnClosed(EventArgs e)
+        {
+            base.OnClosed(e);
+            _parent?.Show();
+        }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            ErrProvider.SetError(CustomXInput, "");
+            ErrProvider.SetError(sender as Control, "");
+            CustomYOut.Clear();
+            if (_controlPoints == null || _controlPoints.Length == 0)
+            {
+                ErrProvider.SetError(sender as Control, "Контрольные точки не заданы, действие невозможно");
+                return;
+            }
+
+            ErrProvider.SetError(CustomXInput, !float.TryParse(CustomXInput.Text, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out float x) ? "Не число!" : "");
+
+            if (ShouldRestrictArgRange_CheckBox.Checked)
+            {
+                _controlPoints = _controlPoints.OrderBy(p => p.X).ToArray();
+                if (x < _controlPoints[0].X || x > _controlPoints[_controlPoints.Length - 1].X)
+                {
+                    ErrProvider.SetError(CustomXInput, "Значение должно находится в заданном диапазоне опорных точек!");
+                    return;
+                }
+            }
+
+            var y = GetInterpolationByType(
+                (InterpolationType)Enum.Parse(typeof(InterpolationType), InterpolationSelect.SelectedValue.ToString()),
+                _controlPoints).Invoke(x);
+
+            CustomYOut.Text = y.ToString(CultureInfo.InvariantCulture);
         }
     }
 }
