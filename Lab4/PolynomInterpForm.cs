@@ -205,7 +205,7 @@ namespace Lab4
 
             for (int i = 0; i < tokens.Length; i++)
             {
-                if (!float.TryParse(tokens[i], out values[i]))
+                if (!float.TryParse(tokens[i], NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out values[i]))
                 {
                     return null; // Возвращаем null в случае ошибки парсинга
                 }
