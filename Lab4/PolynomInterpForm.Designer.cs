@@ -39,6 +39,10 @@
             this.CustomXInput = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.SmoothingSelect = new System.Windows.Forms.ComboBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.smoothingCheck = new System.Windows.Forms.RadioButton();
+            this.interpolationCheck = new System.Windows.Forms.RadioButton();
             this.label3 = new System.Windows.Forms.Label();
             this.InterpolationSelect = new System.Windows.Forms.ComboBox();
             this.InterpolationStepInput = new System.Windows.Forms.TextBox();
@@ -55,10 +59,6 @@
             this.PlotView = new OxyPlot.WindowsForms.PlotView();
             this.ErrProvider = new System.Windows.Forms.ErrorProvider(this.components);
             this.ToolTipProvider = new System.Windows.Forms.ToolTip(this.components);
-            this.interpolationCheck = new System.Windows.Forms.RadioButton();
-            this.smoothingCheck = new System.Windows.Forms.RadioButton();
-            this.label8 = new System.Windows.Forms.Label();
-            this.SmoothingSelect = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -137,9 +137,9 @@
             this.label7.AutoSize = true;
             this.label7.Location = new System.Drawing.Point(6, 79);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(301, 13);
+            this.label7.Size = new System.Drawing.Size(312, 13);
             this.label7.TabIndex = 3;
-            this.label7.Text = "Рассчётное значение интерполирующей функции в точке:";
+            this.label7.Text = "Рассчётное значение аппроксимационной функции в точке:";
             // 
             // ShouldRestrictArgRange_CheckBox
             // 
@@ -183,6 +183,47 @@
             this.groupBox2.TabIndex = 8;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Параметры";
+            // 
+            // SmoothingSelect
+            // 
+            this.SmoothingSelect.FormattingEnabled = true;
+            this.SmoothingSelect.Location = new System.Drawing.Point(128, 101);
+            this.SmoothingSelect.Name = "SmoothingSelect";
+            this.SmoothingSelect.Size = new System.Drawing.Size(314, 21);
+            this.SmoothingSelect.TabIndex = 10;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(7, 104);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(113, 13);
+            this.label8.TabIndex = 9;
+            this.label8.Text = "Метод Сглаживания:";
+            // 
+            // smoothingCheck
+            // 
+            this.smoothingCheck.AutoSize = true;
+            this.smoothingCheck.Location = new System.Drawing.Point(9, 84);
+            this.smoothingCheck.Name = "smoothingCheck";
+            this.smoothingCheck.Size = new System.Drawing.Size(93, 17);
+            this.smoothingCheck.TabIndex = 8;
+            this.smoothingCheck.TabStop = true;
+            this.smoothingCheck.Text = "Сглаживание";
+            this.smoothingCheck.UseVisualStyleBackColor = true;
+            this.smoothingCheck.CheckedChanged += new System.EventHandler(this.AlgorithmChanged);
+            // 
+            // interpolationCheck
+            // 
+            this.interpolationCheck.AutoSize = true;
+            this.interpolationCheck.Location = new System.Drawing.Point(9, 20);
+            this.interpolationCheck.Name = "interpolationCheck";
+            this.interpolationCheck.Size = new System.Drawing.Size(98, 17);
+            this.interpolationCheck.TabIndex = 7;
+            this.interpolationCheck.TabStop = true;
+            this.interpolationCheck.Text = "Интерполяция";
+            this.interpolationCheck.UseVisualStyleBackColor = true;
+            this.interpolationCheck.CheckedChanged += new System.EventHandler(this.AlgorithmChanged);
             // 
             // label3
             // 
@@ -322,47 +363,6 @@
             // ErrProvider
             // 
             this.ErrProvider.ContainerControl = this;
-            // 
-            // interpolationCheck
-            // 
-            this.interpolationCheck.AutoSize = true;
-            this.interpolationCheck.Location = new System.Drawing.Point(9, 20);
-            this.interpolationCheck.Name = "interpolationCheck";
-            this.interpolationCheck.Size = new System.Drawing.Size(98, 17);
-            this.interpolationCheck.TabIndex = 7;
-            this.interpolationCheck.TabStop = true;
-            this.interpolationCheck.Text = "Интерполяция";
-            this.interpolationCheck.UseVisualStyleBackColor = true;
-            this.interpolationCheck.CheckedChanged += new System.EventHandler(this.AlgorithmChanged);
-            // 
-            // smoothingCheck
-            // 
-            this.smoothingCheck.AutoSize = true;
-            this.smoothingCheck.Location = new System.Drawing.Point(9, 84);
-            this.smoothingCheck.Name = "smoothingCheck";
-            this.smoothingCheck.Size = new System.Drawing.Size(93, 17);
-            this.smoothingCheck.TabIndex = 8;
-            this.smoothingCheck.TabStop = true;
-            this.smoothingCheck.Text = "Сглаживание";
-            this.smoothingCheck.UseVisualStyleBackColor = true;
-            this.smoothingCheck.CheckedChanged += new System.EventHandler(this.AlgorithmChanged);
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(7, 104);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(113, 13);
-            this.label8.TabIndex = 9;
-            this.label8.Text = "Метод Сглаживания:";
-            // 
-            // SmoothingSelect
-            // 
-            this.SmoothingSelect.FormattingEnabled = true;
-            this.SmoothingSelect.Location = new System.Drawing.Point(128, 101);
-            this.SmoothingSelect.Name = "SmoothingSelect";
-            this.SmoothingSelect.Size = new System.Drawing.Size(314, 21);
-            this.SmoothingSelect.TabIndex = 10;
             // 
             // PolynomInterpForm
             // 
