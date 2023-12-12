@@ -1,8 +1,8 @@
 ﻿namespace Lab4
 {
-    public abstract class InterpolationBase
+    public abstract class ApproximationAlgorithmBase
     {
-        protected InterpolationBase(Vector2[] controlPoints)
+        protected ApproximationAlgorithmBase(Vector2[] controlPoints)
         {
             _controlPoints = controlPoints;
         }

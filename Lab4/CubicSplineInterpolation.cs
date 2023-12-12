@@ -11,7 +11,7 @@ namespace Lab4
         public float a, b, c, d, x;
     }
 
-    internal class CubicSplineInterpolation : InterpolationBase
+    internal class CubicSplineInterpolation : ApproximationAlgorithmBase
     {
         public CubicSplineInterpolation(Vector2[] args) : base(args)
         {

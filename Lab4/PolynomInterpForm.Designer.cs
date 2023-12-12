@@ -30,8 +30,20 @@
         {
             this.components = new System.ComponentModel.Container();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.TempValuesList = new System.Windows.Forms.ListBox();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.button1 = new System.Windows.Forms.Button();
+            this.CustomYOut = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.ShouldRestrictArgRange_CheckBox = new System.Windows.Forms.CheckBox();
+            this.CustomXInput = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.label3 = new System.Windows.Forms.Label();
             this.InterpolationSelect = new System.Windows.Forms.ComboBox();
+            this.InterpolationStepInput = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.lockInputTextbox = new System.Windows.Forms.CheckBox();
             this.loadFromFileButton = new System.Windows.Forms.Button();
@@ -42,27 +54,19 @@
             this.RenderButton = new System.Windows.Forms.Button();
             this.PlotView = new OxyPlot.WindowsForms.PlotView();
             this.ErrProvider = new System.Windows.Forms.ErrorProvider(this.components);
-            this.label4 = new System.Windows.Forms.Label();
-            this.InterpolationStepInput = new System.Windows.Forms.TextBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.CustomXInput = new System.Windows.Forms.TextBox();
-            this.ShouldRestrictArgRange_CheckBox = new System.Windows.Forms.CheckBox();
-            this.label7 = new System.Windows.Forms.Label();
-            this.CustomYOut = new System.Windows.Forms.TextBox();
-            this.button1 = new System.Windows.Forms.Button();
             this.ToolTipProvider = new System.Windows.Forms.ToolTip(this.components);
-            this.TempValuesList = new System.Windows.Forms.ListBox();
+            this.interpolationCheck = new System.Windows.Forms.RadioButton();
+            this.smoothingCheck = new System.Windows.Forms.RadioButton();
+            this.label8 = new System.Windows.Forms.Label();
+            this.SmoothingSelect = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
+            this.groupBox3.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ErrProvider)).BeginInit();
-            this.groupBox2.SuspendLayout();
-            this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitContainer1
@@ -84,13 +88,106 @@
             // 
             this.splitContainer1.Panel2.Controls.Add(this.PlotView);
             this.splitContainer1.Size = new System.Drawing.Size(1427, 826);
-            this.splitContainer1.SplitterDistance = 473;
+            this.splitContainer1.SplitterDistance = 472;
             this.splitContainer1.TabIndex = 0;
+            // 
+            // TempValuesList
+            // 
+            this.TempValuesList.FormattingEnabled = true;
+            this.TempValuesList.Location = new System.Drawing.Point(15, 405);
+            this.TempValuesList.Name = "TempValuesList";
+            this.TempValuesList.Size = new System.Drawing.Size(445, 212);
+            this.TempValuesList.TabIndex = 10;
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.button1);
+            this.groupBox3.Controls.Add(this.CustomYOut);
+            this.groupBox3.Controls.Add(this.label7);
+            this.groupBox3.Controls.Add(this.ShouldRestrictArgRange_CheckBox);
+            this.groupBox3.Controls.Add(this.CustomXInput);
+            this.groupBox3.Controls.Add(this.label6);
+            this.groupBox3.Location = new System.Drawing.Point(12, 660);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(448, 154);
+            this.groupBox3.TabIndex = 9;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Рассчёт значения";
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(10, 125);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(432, 23);
+            this.button1.TabIndex = 5;
+            this.button1.Text = "Выполнить";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click_1);
+            // 
+            // CustomYOut
+            // 
+            this.CustomYOut.Location = new System.Drawing.Point(10, 95);
+            this.CustomYOut.Name = "CustomYOut";
+            this.CustomYOut.ReadOnly = true;
+            this.CustomYOut.Size = new System.Drawing.Size(432, 20);
+            this.CustomYOut.TabIndex = 4;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(6, 79);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(301, 13);
+            this.label7.TabIndex = 3;
+            this.label7.Text = "Рассчётное значение интерполирующей функции в точке:";
+            // 
+            // ShouldRestrictArgRange_CheckBox
+            // 
+            this.ShouldRestrictArgRange_CheckBox.AutoSize = true;
+            this.ShouldRestrictArgRange_CheckBox.Location = new System.Drawing.Point(10, 49);
+            this.ShouldRestrictArgRange_CheckBox.Name = "ShouldRestrictArgRange_CheckBox";
+            this.ShouldRestrictArgRange_CheckBox.Size = new System.Drawing.Size(227, 17);
+            this.ShouldRestrictArgRange_CheckBox.TabIndex = 2;
+            this.ShouldRestrictArgRange_CheckBox.Text = "Ограничить диапазоном опорных точек";
+            this.ShouldRestrictArgRange_CheckBox.UseVisualStyleBackColor = true;
+            // 
+            // CustomXInput
+            // 
+            this.CustomXInput.Location = new System.Drawing.Point(81, 23);
+            this.CustomXInput.Name = "CustomXInput";
+            this.CustomXInput.Size = new System.Drawing.Size(361, 20);
+            this.CustomXInput.TabIndex = 1;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(7, 26);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(68, 13);
+            this.label6.TabIndex = 0;
+            this.label6.Text = "Значение X:";
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.SmoothingSelect);
+            this.groupBox2.Controls.Add(this.label8);
+            this.groupBox2.Controls.Add(this.smoothingCheck);
+            this.groupBox2.Controls.Add(this.interpolationCheck);
+            this.groupBox2.Controls.Add(this.label3);
+            this.groupBox2.Controls.Add(this.InterpolationSelect);
+            this.groupBox2.Controls.Add(this.InterpolationStepInput);
+            this.groupBox2.Controls.Add(this.label4);
+            this.groupBox2.Location = new System.Drawing.Point(12, 205);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(448, 181);
+            this.groupBox2.TabIndex = 8;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Параметры";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(7, 16);
+            this.label3.Location = new System.Drawing.Point(6, 40);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(115, 13);
             this.label3.TabIndex = 3;
@@ -99,10 +196,35 @@
             // InterpolationSelect
             // 
             this.InterpolationSelect.FormattingEnabled = true;
-            this.InterpolationSelect.Location = new System.Drawing.Point(128, 13);
+            this.InterpolationSelect.Location = new System.Drawing.Point(128, 37);
             this.InterpolationSelect.Name = "InterpolationSelect";
             this.InterpolationSelect.Size = new System.Drawing.Size(314, 21);
             this.InterpolationSelect.TabIndex = 2;
+            // 
+            // InterpolationStepInput
+            // 
+            this.InterpolationStepInput.Location = new System.Drawing.Point(194, 155);
+            this.InterpolationStepInput.Name = "InterpolationStepInput";
+            this.InterpolationStepInput.Size = new System.Drawing.Size(248, 20);
+            this.InterpolationStepInput.TabIndex = 6;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(7, 158);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(181, 13);
+            this.label4.TabIndex = 5;
+            this.label4.Text = "Шаг аппроксимирующей функции:";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(9, 389);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(143, 13);
+            this.label5.TabIndex = 7;
+            this.label5.Text = "Промежуточные значения:";
             // 
             // groupBox1
             // 
@@ -190,7 +312,7 @@
             this.PlotView.Location = new System.Drawing.Point(0, 0);
             this.PlotView.Name = "PlotView";
             this.PlotView.PanCursor = System.Windows.Forms.Cursors.Hand;
-            this.PlotView.Size = new System.Drawing.Size(950, 826);
+            this.PlotView.Size = new System.Drawing.Size(951, 826);
             this.PlotView.TabIndex = 0;
             this.PlotView.Text = "plotView1";
             this.PlotView.ZoomHorizontalCursor = System.Windows.Forms.Cursors.SizeWE;
@@ -201,119 +323,46 @@
             // 
             this.ErrProvider.ContainerControl = this;
             // 
-            // label4
+            // interpolationCheck
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(7, 45);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(104, 13);
-            this.label4.TabIndex = 5;
-            this.label4.Text = "Шаг интерполяции:";
+            this.interpolationCheck.AutoSize = true;
+            this.interpolationCheck.Location = new System.Drawing.Point(9, 20);
+            this.interpolationCheck.Name = "interpolationCheck";
+            this.interpolationCheck.Size = new System.Drawing.Size(98, 17);
+            this.interpolationCheck.TabIndex = 7;
+            this.interpolationCheck.TabStop = true;
+            this.interpolationCheck.Text = "Интерполяция";
+            this.interpolationCheck.UseVisualStyleBackColor = true;
+            this.interpolationCheck.CheckedChanged += new System.EventHandler(this.AlgorithmChanged);
             // 
-            // InterpolationStepInput
+            // smoothingCheck
             // 
-            this.InterpolationStepInput.Location = new System.Drawing.Point(128, 42);
-            this.InterpolationStepInput.Name = "InterpolationStepInput";
-            this.InterpolationStepInput.Size = new System.Drawing.Size(314, 20);
-            this.InterpolationStepInput.TabIndex = 6;
+            this.smoothingCheck.AutoSize = true;
+            this.smoothingCheck.Location = new System.Drawing.Point(9, 84);
+            this.smoothingCheck.Name = "smoothingCheck";
+            this.smoothingCheck.Size = new System.Drawing.Size(93, 17);
+            this.smoothingCheck.TabIndex = 8;
+            this.smoothingCheck.TabStop = true;
+            this.smoothingCheck.Text = "Сглаживание";
+            this.smoothingCheck.UseVisualStyleBackColor = true;
+            this.smoothingCheck.CheckedChanged += new System.EventHandler(this.AlgorithmChanged);
             // 
-            // label5
+            // label8
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(12, 284);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(143, 13);
-            this.label5.TabIndex = 7;
-            this.label5.Text = "Промежуточные значения:";
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(7, 104);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(113, 13);
+            this.label8.TabIndex = 9;
+            this.label8.Text = "Метод Сглаживания:";
             // 
-            // groupBox2
+            // SmoothingSelect
             // 
-            this.groupBox2.Controls.Add(this.label3);
-            this.groupBox2.Controls.Add(this.InterpolationSelect);
-            this.groupBox2.Controls.Add(this.InterpolationStepInput);
-            this.groupBox2.Controls.Add(this.label4);
-            this.groupBox2.Location = new System.Drawing.Point(12, 205);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(448, 76);
-            this.groupBox2.TabIndex = 8;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Параметры";
-            // 
-            // groupBox3
-            // 
-            this.groupBox3.Controls.Add(this.button1);
-            this.groupBox3.Controls.Add(this.CustomYOut);
-            this.groupBox3.Controls.Add(this.label7);
-            this.groupBox3.Controls.Add(this.ShouldRestrictArgRange_CheckBox);
-            this.groupBox3.Controls.Add(this.CustomXInput);
-            this.groupBox3.Controls.Add(this.label6);
-            this.groupBox3.Location = new System.Drawing.Point(12, 660);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(448, 154);
-            this.groupBox3.TabIndex = 9;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Рассчёт значения";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(7, 26);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(68, 13);
-            this.label6.TabIndex = 0;
-            this.label6.Text = "Значение X:";
-            // 
-            // CustomXInput
-            // 
-            this.CustomXInput.Location = new System.Drawing.Point(81, 23);
-            this.CustomXInput.Name = "CustomXInput";
-            this.CustomXInput.Size = new System.Drawing.Size(361, 20);
-            this.CustomXInput.TabIndex = 1;
-            // 
-            // ShouldRestrictArgRange_CheckBox
-            // 
-            this.ShouldRestrictArgRange_CheckBox.AutoSize = true;
-            this.ShouldRestrictArgRange_CheckBox.Location = new System.Drawing.Point(10, 49);
-            this.ShouldRestrictArgRange_CheckBox.Name = "ShouldRestrictArgRange_CheckBox";
-            this.ShouldRestrictArgRange_CheckBox.Size = new System.Drawing.Size(227, 17);
-            this.ShouldRestrictArgRange_CheckBox.TabIndex = 2;
-            this.ShouldRestrictArgRange_CheckBox.Text = "Ограничить диапазоном опорных точек";
-            this.ShouldRestrictArgRange_CheckBox.UseVisualStyleBackColor = true;
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(6, 79);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(301, 13);
-            this.label7.TabIndex = 3;
-            this.label7.Text = "Рассчётное значение интерполирующей функции в точке:";
-            // 
-            // CustomYOut
-            // 
-            this.CustomYOut.Location = new System.Drawing.Point(10, 95);
-            this.CustomYOut.Name = "CustomYOut";
-            this.CustomYOut.ReadOnly = true;
-            this.CustomYOut.Size = new System.Drawing.Size(432, 20);
-            this.CustomYOut.TabIndex = 4;
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(10, 125);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(432, 23);
-            this.button1.TabIndex = 5;
-            this.button1.Text = "Выполнить";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click_1);
-            // 
-            // TempValuesList
-            // 
-            this.TempValuesList.FormattingEnabled = true;
-            this.TempValuesList.Location = new System.Drawing.Point(15, 301);
-            this.TempValuesList.Name = "TempValuesList";
-            this.TempValuesList.Size = new System.Drawing.Size(445, 316);
-            this.TempValuesList.TabIndex = 10;
+            this.SmoothingSelect.FormattingEnabled = true;
+            this.SmoothingSelect.Location = new System.Drawing.Point(128, 101);
+            this.SmoothingSelect.Name = "SmoothingSelect";
+            this.SmoothingSelect.Size = new System.Drawing.Size(314, 21);
+            this.SmoothingSelect.TabIndex = 10;
             // 
             // PolynomInterpForm
             // 
@@ -329,13 +378,13 @@
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ErrProvider)).EndInit();
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
-            this.groupBox3.ResumeLayout(false);
-            this.groupBox3.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -368,6 +417,10 @@
         private System.Windows.Forms.TextBox CustomXInput;
         private System.Windows.Forms.ToolTip ToolTipProvider;
         private System.Windows.Forms.ListBox TempValuesList;
+        private System.Windows.Forms.RadioButton smoothingCheck;
+        private System.Windows.Forms.RadioButton interpolationCheck;
+        private System.Windows.Forms.ComboBox SmoothingSelect;
+        private System.Windows.Forms.Label label8;
     }
 }
 

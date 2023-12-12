@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Timers;
 using System.Windows.Forms;
 using OxyPlot;
+using OxyPlot.Legends;
 using OxyPlot.Series;
 
 namespace Lab4
@@ -26,8 +27,13 @@ namespace Lab4
             _validationTimer.AutoReset = false;
             _validationTimer.Elapsed += ValidationTimerElapsed;
             InterpolationSelect.DataSource = Enum.GetValues(typeof(InterpolationType));
+            SmoothingSelect.DataSource = Enum.GetValues(typeof(SmoothingType));
+
+            interpolationCheck.Checked = true;
+
             InterpolationStepInput.Text = _interpolationStep.ToString(CultureInfo.InvariantCulture);
             ToolTipProvider.SetToolTip(ShouldRestrictArgRange_CheckBox, "Если включен, ввод значения, выходящего за границы диапазона, заданного опорными точками, будет считаться ошибкой");
+            _selectedAlgoType = AlgorithmType.Interpolation;
         }
 
         private void TextBoxTextChanged(object sender, EventArgs e)
@@ -48,6 +54,8 @@ namespace Lab4
         private float _interpolationStep = 1e-1f;
         private Vector2[] _controlPoints;
         private Form _parent;
+
+        private AlgorithmType _selectedAlgoType;
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -70,9 +78,14 @@ namespace Lab4
 
             if (_controlPoints == null || _controlPoints.Length == 0) { return; }
 
-            var interpolator = GetInterpolationByType((InterpolationType)Enum.Parse(typeof(InterpolationType), InterpolationSelect.SelectedValue.ToString()), _controlPoints);
+            var interpolator = GetFunctionByType( _controlPoints);
 
-            var model = new PlotModel { Title = "Интерполяция функции в заданных значениях" };
+            if (interpolator == null)
+                return;
+
+            var model = new PlotModel { Title = "Аппроксимация функции в заданных значениях" };
+
+            //model.Legends.Add(new Legend() {LegendPlacement = LegendPlacement.Outside});
 
             var scatterSeries = new ScatterSeries() { MarkerType = MarkerType.Circle };
 
@@ -91,7 +104,7 @@ namespace Lab4
             {
                 var interp_x = interpolator.Invoke(x);
                 lineSeries.Points.Add(new DataPoint(x, interp_x));
-                TempValuesList.Items.Add($"x = {x}, <interp>__P(x) = {interp_x}");
+                TempValuesList.Items.Add($"x = {x}, <approx>__P(x) = {interp_x}");
             }
 
             model.Series.Add(scatterSeries);
@@ -214,19 +227,45 @@ namespace Lab4
             return values;
         }
 
-        private Func<float, float> GetInterpolationByType(InterpolationType type, Vector2[] args)
+        private Func<float, float> GetFunctionByType(Vector2[] args)
         {
-            switch (type)
+            if (_selectedAlgoType == AlgorithmType.Interpolation)
             {
-                case InterpolationType.Lagrange:
-                    return Interpolation.OfLagrange(args);
-                case InterpolationType.Newton:
-                    return Interpolation.OfNewton(args);
-                case InterpolationType.CubicSpline:
-                    return Interpolation.CubicSpline(args);
-                default:
-                    return null;
+                var type = (InterpolationType)Enum.Parse(typeof(InterpolationType),
+                    InterpolationSelect.SelectedValue.ToString());
+                switch (type)
+                {
+                    case InterpolationType.Lagrange:
+                        return Interpolation.OfLagrange(args);
+                    case InterpolationType.Newton:
+                        return Interpolation.OfNewton(args);
+                    case InterpolationType.CubicSpline:
+                        return Interpolation.CubicSpline(args);
+                    default:
+                        return null;
+                }
+
             }
+
+            if (_selectedAlgoType == AlgorithmType.Smoothing)
+            {
+                var type = (SmoothingType)Enum.Parse(typeof(SmoothingType), SmoothingSelect.SelectedValue.ToString());
+
+                switch (type)
+                {
+                    case SmoothingType.NonLinearLeastSquares:
+                        return Smoothing.NonLinearLeastSquares(args);
+                    case SmoothingType.LinearLeastSquares:
+                        return Smoothing.LinearLeastSquares(args);
+                    default:
+                        return null;
+                }
+            }
+
+            MessageBox.Show(
+                "Unable to perform operation cause selected combination of algo type and algo implementation does not exists",
+                "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            return null;
         }
 
         protected override void OnClosed(EventArgs e)
@@ -258,11 +297,29 @@ namespace Lab4
                 }
             }
 
-            var y = GetInterpolationByType(
-                (InterpolationType)Enum.Parse(typeof(InterpolationType), InterpolationSelect.SelectedValue.ToString()),
-                _controlPoints).Invoke(x);
+            var func = GetFunctionByType(_controlPoints);
+            if (func == null) return;
+
+            var y = func.Invoke(x);
 
             CustomYOut.Text = y.ToString(CultureInfo.InvariantCulture);
+        }
+
+        private void AlgorithmChanged(object sender, EventArgs e)
+        {
+            if (!(sender is RadioButton button))
+            {
+                return;
+            }
+
+            if (button == interpolationCheck)
+                _selectedAlgoType = AlgorithmType.Interpolation;
+            else if (button == smoothingCheck)
+                _selectedAlgoType = AlgorithmType.Smoothing;
+            else
+            {
+                throw new InvalidOperationException("Invalid object given");
+            }
         }
     }
 }

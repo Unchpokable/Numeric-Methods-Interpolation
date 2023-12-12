@@ -1,6 +1,6 @@
 ﻿namespace Lab4
 {
-    internal class NewtonInterpolation : InterpolationBase
+    internal class NewtonInterpolation : ApproximationAlgorithmBase
     {
         public NewtonInterpolation(Vector2[] args) : base(args) { }
 

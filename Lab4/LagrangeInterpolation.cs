@@ -1,6 +1,6 @@
 ﻿namespace Lab4
 {
-    internal class LagrangeInterpolation : InterpolationBase
+    internal class LagrangeInterpolation : ApproximationAlgorithmBase
     {
         public LagrangeInterpolation(Vector2[] controlPoints) : base(controlPoints) { }
 
