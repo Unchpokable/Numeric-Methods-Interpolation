@@ -83,18 +83,18 @@ namespace Lab4
             if (interpolator == null)
                 return;
 
-            var model = new PlotModel { Title = "Аппроксимация функции в заданных значениях" };
+            var model = new PlotModel { Title = "Аппроксимация функции в заданных значениях", IsLegendVisible = true};
 
             //model.Legends.Add(new Legend() {LegendPlacement = LegendPlacement.Outside});
 
-            var scatterSeries = new ScatterSeries() { MarkerType = MarkerType.Circle };
+            var scatterSeries = new ScatterSeries() { MarkerType = MarkerType.Circle, Title = "Опорные значения", MarkerFill = OxyColors.Green };
 
             foreach (var pt in _controlPoints)
             {
                 scatterSeries.Points.Add(new ScatterPoint(pt.X, pt.Y));
             }
 
-            var lineSeries = new LineSeries { Color = OxyColors.Blue };
+            var lineSeries = new LineSeries { Color = OxyColors.Blue, Title = "Аппроксимированная функция" };
 
 
             var minx = _controlPoints.Select(x => x.X).Min();
@@ -109,6 +109,9 @@ namespace Lab4
 
             model.Series.Add(scatterSeries);
             model.Series.Add(lineSeries);
+
+            model.Legends.Add(new Legend() { LegendPlacement = LegendPlacement.Outside, LegendFontSize = 18, LegendPosition = LegendPosition.TopLeft });
+            model.Legends.Add(new Legend() { LegendPlacement = LegendPlacement.Outside, LegendFontSize = 18, LegendPosition = LegendPosition.TopLeft });
 
             PlotView.Model = model;
         }
@@ -128,8 +131,8 @@ namespace Lab4
             }
             
             // Получаем введенные значения
-            string[] xValues = XInputTextbox.Text.Split(' ');
-            string[] yValues = YInputTextbox.Text.Split(' ');
+            string[] xValues = XInputTextbox.Text.Trim().Split(' ');
+            string[] yValues = YInputTextbox.Text.Trim().Split(' ');
 
             // Проверка наличия недопустимых символов
             if (xValues.Any(value => !IsValidInput(value)) || yValues.Any(value => !IsValidInput(value)))
