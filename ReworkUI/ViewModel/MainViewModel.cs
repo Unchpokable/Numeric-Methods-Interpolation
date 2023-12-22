@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,6 +10,7 @@ using System.Windows;
 using System.Windows.Markup;
 using System.Windows.Media;
 using Lab4;
+using Microsoft.Win32;
 using OxyPlot;
 using OxyPlot.Axes;
 using OxyPlot.Legends;
@@ -34,6 +36,8 @@ namespace ReworkUI.ViewModel
 
             PerformDirectCalculation = new RelayCommand(PerformDirectCalculateInternal);
 
+            LoadDataFromFile = new RelayCommand(LoadDataFromFileInternal);
+
             ApproximationFunctionStep = 0.01f;
             _processor.Step = ApproximationFunctionStep;
 
@@ -47,6 +51,8 @@ namespace ReworkUI.ViewModel
         public RelayCommand SwapProcessingModes { get; set; }
         public RelayCommand PerformDirectCalculation { get; set; }
         public RelayCommand ProcessFunction { get; set; }
+
+        public RelayCommand LoadDataFromFile { get; set; }
 
         public object SelectedProcessingMode
         {
@@ -330,7 +336,7 @@ namespace ReworkUI.ViewModel
                 hex = hex.Substring(1);
 
             if (hex.Length != 8)
-                throw new ArgumentException("Некорректное Hex-представление ARGB цвета.", nameof(hex));
+                throw new ArgumentException("Incorrect hex color representation", nameof(hex));
 
             byte alpha = Convert.ToByte(hex.Substring(0, 2), 16);
             byte red = Convert.ToByte(hex.Substring(2, 2), 16);
@@ -338,6 +344,56 @@ namespace ReworkUI.ViewModel
             byte blue = Convert.ToByte(hex.Substring(6, 2), 16);
 
             return (alpha, red, green, blue);
+        }
+
+        private void LoadDataFromFileInternal(object o)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
+
+            if (openFileDialog.ShowDialog() == true)
+            {
+                string filePath = openFileDialog.FileName;
+                try
+                {
+                    string[] lines = File.ReadAllLines(filePath);
+
+                    float[] arrayX = ParseStringToFloatArray(lines[0]);
+                    float[] arrayY = ParseStringToFloatArray(lines[1]);
+
+                    RawInputX = lines[0];
+                    RawInputY = lines[1];
+
+                    _inputDataX = arrayX.ToList();
+                    _inputDataY = arrayY.ToList();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error reading file: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+        }
+
+        private float[] ParseStringToFloatArray(string input)
+        {
+            string[] stringNumbers = input.Split(' ');
+
+            float[] result = new float[stringNumbers.Length];
+
+            for (int i = 0; i < stringNumbers.Length; i++)
+            {
+                if (float.TryParse(stringNumbers[i], out float number))
+                {
+                    result[i] = number;
+                }
+                else
+                {
+                    MessageBox.Show($"Error parsing value \"{stringNumbers[i]}\" at line {input}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return null;
+                }
+            }
+
+            return result;
         }
     }
 }

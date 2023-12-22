@@ -235,7 +235,8 @@
                                 Style="{StaticResource MaterialDesignFlatMidBgButton}"
                                 Foreground="White"
                                 FontFamily="Tahoma" 
-                                FontWeight="Bold" >
+                                FontWeight="Bold" 
+                                Command="{Binding LoadDataFromFile}">
                             <Button.Background>
                                 <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
                                     <GradientStop Color="#FF00AFD0" Offset="0"/>
