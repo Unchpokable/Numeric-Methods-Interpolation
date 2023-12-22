@@ -8,7 +8,7 @@ namespace Lab4
         LinearLeastSquares
     }
 
-    internal class Smoothing
+    public class Smoothing
     {
         public static Func<float, float> NonLinearLeastSquares(Vector2[] controlPoints)
         {

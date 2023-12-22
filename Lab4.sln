@@ -5,6 +5,8 @@ VisualStudioVersion = 17.7.34221.43
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lab4", "Lab4\Lab4.csproj", "{8B287D3C-9A77-461C-8ACA-3902FF47D16D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReworkUI", "ReworkUI\ReworkUI.csproj", "{0019659C-F309-418B-8CE7-7DD2C71EB49F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{8B287D3C-9A77-461C-8ACA-3902FF47D16D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8B287D3C-9A77-461C-8ACA-3902FF47D16D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8B287D3C-9A77-461C-8ACA-3902FF47D16D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0019659C-F309-418B-8CE7-7DD2C71EB49F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0019659C-F309-418B-8CE7-7DD2C71EB49F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0019659C-F309-418B-8CE7-7DD2C71EB49F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0019659C-F309-418B-8CE7-7DD2C71EB49F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
