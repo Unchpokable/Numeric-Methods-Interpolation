@@ -1,21 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Markup;
 using System.Windows.Media;
 using Lab4;
 using Microsoft.Win32;
 using OxyPlot;
-using OxyPlot.Axes;
 using OxyPlot.Legends;
 using ReworkUI.Core;
 using ReworkUI.Model;
+using ColorPicker;
+using MaterialDesignThemes.Wpf;
 
 namespace ReworkUI.ViewModel
 {
@@ -38,6 +35,8 @@ namespace ReworkUI.ViewModel
 
             LoadDataFromFile = new RelayCommand(LoadDataFromFileInternal);
 
+            SelectPlotBackground = new RelayCommand(SelectPlotBackgroundColor);
+
             ApproximationFunctionStep = 0.01f;
             _processor.Step = ApproximationFunctionStep;
 
@@ -51,6 +50,7 @@ namespace ReworkUI.ViewModel
         public RelayCommand SwapProcessingModes { get; set; }
         public RelayCommand PerformDirectCalculation { get; set; }
         public RelayCommand ProcessFunction { get; set; }
+        public RelayCommand SelectPlotBackground { get; set; }
 
         public RelayCommand LoadDataFromFile { get; set; }
 
@@ -394,6 +394,17 @@ namespace ReworkUI.ViewModel
             }
 
             return result;
+        }
+
+        private void SelectPlotBackgroundColor(object o)
+        {
+            var dialog = new Service.Dialogs.ColorPickerDialog();
+            dialog.ShowDialog();
+
+            if (dialog.Selected)
+            {
+                PlotBackground = new SolidColorBrush(dialog.SelectedColor);
+            }
         }
     }
 }

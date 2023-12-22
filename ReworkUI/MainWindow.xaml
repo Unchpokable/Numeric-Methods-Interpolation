@@ -213,10 +213,14 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-            <oxy:PlotView Background="{Binding PlotBackground}"
-                Model="{Binding Model}"
-                >
-            </oxy:PlotView>
+            <Border Background="{Binding PlotBackground}"
+                    Margin="5"
+                    CornerRadius="10">
+                <oxy:PlotView Background="Transparent"
+                    Model="{Binding Model}"
+                    >
+                </oxy:PlotView>
+            </Border>
 
             
             <Grid Grid.Column="1" Grid.Row="0">
@@ -374,6 +378,20 @@
                                VerticalAlignment="Center">
                             Цвет фона:
                         </Label>
+
+                        <Border Grid.Column="1"
+                                Margin="10"
+                                CornerRadius="10"
+                                Background="{Binding PlotBackground}"
+                                Cursor="Hand"
+                                BorderBrush="Gray"
+                                BorderThickness="5">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="MouseDown">
+                                    <i:InvokeCommandAction Command="{Binding SelectPlotBackground}"></i:InvokeCommandAction>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </Border>
                     </Grid>
 
 

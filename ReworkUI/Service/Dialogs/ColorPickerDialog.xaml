@@ -1,0 +1,78 @@
+﻿<Window x:Class="ReworkUI.Service.Dialogs.ColorPickerDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:pixi="clr-namespace:ColorPicker;assembly=ColorPicker"
+        xmlns:local="clr-namespace:ReworkUI.Service.Dialogs"
+        xmlns:core="clr-namespace:ReworkUI.Core"
+        mc:Ignorable="d"
+        Title="Select Color" Height="650" Width="350">
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/ColorPicker;component/Styles/DefaultColorPickerStyle.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Button.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Border Background="#FF252525">
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="50"/>
+            </Grid.RowDefinitions>
+
+            <Grid>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition Height=".5*"/>
+                    <RowDefinition Height=".1*"></RowDefinition>
+                </Grid.RowDefinitions>
+
+                <pixi:SquarePicker
+                    Style="{StaticResource DefaultColorPickerStyle}"
+                    SelectedColor="{Binding SelectedColor, Mode=TwoWay}"/>
+                <pixi:ColorSliders Grid.Row="1"
+                    Style="{StaticResource DefaultColorPickerStyle}"
+                    SelectedColor="{Binding SelectedColor, Mode=TwoWay}"/>
+
+                <Border Grid.Row="2"
+                        Background="{Binding SelectedColorBrush}"
+                        CornerRadius="10"
+                        BorderBrush="Gray"
+                        BorderThickness="1"
+                        Margin="5"/>
+
+            </Grid>
+
+
+            <Button Margin="5" Grid.Row="1"
+                    Style="{StaticResource MaterialDesignFlatMidBgButton}"
+                    Foreground="White"
+                    FontFamily="Tahoma" 
+                    FontWeight="Bold"
+                    Click="ButtonBase_OnClick">
+                <Button.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                        <GradientStop Color="#FF00AFD0" Offset="0"/>
+                        <GradientStop Color="#FF00CABD" Offset="1"/>
+                    </LinearGradientBrush>
+                </Button.Background>
+
+                <core:OutlinedTextBlock Fill="White"
+                                        FontFamily="Tahoma" 
+                                        FontWeight="Bold"
+                                        Stroke="Black"
+                                        FontSize="18">
+                    Выбрать!
+                </core:OutlinedTextBlock>
+            </Button>
+
+        </Grid>
+    </Border>
+</Window>
