@@ -226,7 +226,7 @@
             <Grid Grid.Column="1" Grid.Row="0">
                 <Grid.RowDefinitions>
                     <RowDefinition/>
-                    <RowDefinition/>
+                    <RowDefinition Height=".9*"/>
                 </Grid.RowDefinitions>
                 <GroupBox 
                           Header ="Задать данные:"

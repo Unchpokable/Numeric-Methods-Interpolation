@@ -207,6 +207,9 @@ namespace ReworkUI.ViewModel
 
         private void ExecuteFunctionProcessing(object parameter)
         {
+            if (!ValidateInput())
+                return;
+
             var selectedProcessingMode = _selectedProcessingMode;
 
             _processor.Steps.Clear();
@@ -249,7 +252,7 @@ namespace ReworkUI.ViewModel
             Model = data;
         }
 
-        private void ValidateInput()
+        private bool ValidateInput()
         {
             var xs = RawInputX?.Trim().Split(' ') ?? Array.Empty<string>();
             var ys = RawInputY?.Trim().Split(' ') ?? Array.Empty<string>();
@@ -262,15 +265,18 @@ namespace ReworkUI.ViewModel
                 if (_inputDataX.Count != _inputDataY.Count)
                 {
                     InputErrorLabelVisible = Visibility.Visible;
+                    return false;
                 }
                 else
                 {
                     InputErrorLabelVisible = Visibility.Collapsed;
+                    return true;
                 }
             }
             catch (FormatException)
             {
                 InputErrorLabelVisible = Visibility.Visible;
+                return false;
             }
         }
 
@@ -399,7 +405,7 @@ namespace ReworkUI.ViewModel
 
         private void SelectPlotBackgroundColor(object o)
         {
-            var dialog = new Service.Dialogs.ColorPickerDialog();
+            var dialog = new Service.Dialogs.ColorPickerDialog(((SolidColorBrush)PlotBackground).Color);
             dialog.ShowDialog();
 
             if (dialog.Selected)

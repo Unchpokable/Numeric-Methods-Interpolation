@@ -7,11 +7,12 @@ namespace ReworkUI.Service.Dialogs
 {
     public partial class ColorPickerDialog : Window, INotifyPropertyChanged
     {
-        public ColorPickerDialog()
+        public ColorPickerDialog(Color baseColor = default)
         {
             InitializeComponent();
             DataContext = this;
             _selectedColor.A = 255;
+            SelectedColor = baseColor;
         }
 
         public SolidColorBrush SelectedColorBrush { get; set; }
