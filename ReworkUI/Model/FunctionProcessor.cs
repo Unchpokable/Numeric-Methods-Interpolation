@@ -101,7 +101,7 @@ namespace ReworkUI.Model
             {
                 var interpX = interpolator.Invoke(x);
                 interpolationSeries.Points.Add(new DataPoint(x, interpX));
-                Steps.Add($"x = {x}, y = {interpX}");
+                Steps.Add($"x = {x:0.0000}, y = {interpX:0.0000}");
             }
 
             model.Series.Add(controlPointsSeries);

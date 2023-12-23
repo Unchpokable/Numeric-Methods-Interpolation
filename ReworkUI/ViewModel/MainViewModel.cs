@@ -11,8 +11,6 @@ using OxyPlot;
 using OxyPlot.Legends;
 using ReworkUI.Core;
 using ReworkUI.Model;
-using ColorPicker;
-using MaterialDesignThemes.Wpf;
 
 namespace ReworkUI.ViewModel
 {
@@ -383,11 +381,11 @@ namespace ReworkUI.ViewModel
 
         private float[] ParseStringToFloatArray(string input)
         {
-            string[] stringNumbers = input.Split(' ');
+            var stringNumbers = input.Split(' ');
 
-            float[] result = new float[stringNumbers.Length];
+            var result = new float[stringNumbers.Length];
 
-            for (int i = 0; i < stringNumbers.Length; i++)
+            for (var i = 0; i < stringNumbers.Length; i++)
             {
                 if (float.TryParse(stringNumbers[i], out float number))
                 {
