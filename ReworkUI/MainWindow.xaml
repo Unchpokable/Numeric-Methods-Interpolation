@@ -13,6 +13,10 @@
         xmlns:converters="clr-namespace:ReworkUI.Converters"
         xmlns:axes="clr-namespace:OxyPlot.Axes;assembly=OxyPlot"
         mc:Ignorable="d"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        Background="Transparent"
+        AllowsTransparency="True"
         Title="Интерполяция и сглаживание" Height="850" Width="1200">
     
 <Window.DataContext>
@@ -197,50 +201,48 @@
         </ResourceDictionary>
 </Window.Resources>
 
-    <Border>
+    <Border CornerRadius="5">
         <Border.Background>
             <SolidColorBrush Color="#FF252525"></SolidColorBrush>
         </Border.Background>
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="3.5*"/>
-                <RowDefinition/>
 
+        <Grid>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"/>
+                <RowDefinition/>
             </Grid.RowDefinitions>
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="2.5*"/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
+            <Border Grid.Row="0" 
+                    MouseLeftButtonDown="UIElement_OnMouseLeftButtonDown" 
+                    AutomationProperties.Name="Header"
+                    Background="#FF484747"
+                    CornerRadius="5 5 0 0">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
 
-            <Border Background="{Binding PlotBackground}"
-                    Margin="5"
-                    CornerRadius="10">
-                <oxy:PlotView Background="Transparent"
-                    Model="{Binding Model}"
-                    >
-                </oxy:PlotView>
-            </Border>
+                    <Label >
+                        <Label FontFamily="Tahoma" 
+                               FontWeight="Bold" 
+                               Foreground="#FFC3C3C3"
+                               FontSize="18"
+                               Margin="10 0 0 0">
+                            Интерполяция и сглаживание
+                        </Label>
+                    </Label>
 
-            
-            <Grid Grid.Column="1" Grid.Row="0">
-                <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition Height=".9*"/>
-                </Grid.RowDefinitions>
-                <GroupBox 
-                          Header ="Задать данные:"
-                          FontFamily="Tahoma" 
-                          FontWeight="Bold" 
-                          Foreground="#FFC3C3C3"
-                          Style="{StaticResource MaterialDesignGroupBox}">
-                    <StackPanel Margin="5">
-                        <Button Margin="5"
-                                Style="{StaticResource MaterialDesignFlatMidBgButton}"
-                                Foreground="White"
-                                FontFamily="Tahoma" 
-                                FontWeight="Bold" 
-                                Command="{Binding LoadDataFromFile}">
+                    <StackPanel Grid.Column="1"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Right"
+                            Orientation="Horizontal"
+                            Margin="0 0 5 0">
+
+                        <Button Style="{StaticResource MaterialDesignFlatMidBgButton}"
+                            Margin="5 0 5 0"
+                            Click="Minimize">
                             <Button.Background>
                                 <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
                                     <GradientStop Color="#FF00AFD0" Offset="0"/>
@@ -248,336 +250,234 @@
                                 </LinearGradientBrush>
                             </Button.Background>
 
-                            <core:OutlinedTextBlock Fill="White"
-                                                    FontFamily="Tahoma" 
-                                                    FontWeight="Bold"
-                                                    Stroke="Black"
-                                                    FontSize="18">
-                                Загрузить из файла
-                            </core:OutlinedTextBlock>
+                            <Button.Content>
+                                <materialDesign:PackIcon Kind="Minimize"
+                                                     Foreground="WhiteSmoke"></materialDesign:PackIcon>
+                            </Button.Content>
+
                         </Button>
-                        
-                        
-                        <Label Grid.Column="1" 
-                               FontFamily="Tahoma" 
-                               FontWeight="Bold" 
-                               Foreground="#FFC3C3C3"
-                               Margin="5 5 5 0">
-                            Опорные значения X:
-                        </Label>
 
-                        <TextBox Margin="5" Text="{Binding RawInputX}"
-                                 FontFamily="Tahoma" 
-                                 FontWeight="Bold" 
-                                 Height="30"
-                                 FontSize="18"
-                                 Foreground="#FFC3C3C3" Background="#FF5F5F5F"
-                                 VerticalContentAlignment="Center">
-                            <TextBox.Resources>
-                                <Style TargetType="{x:Type Border}">
-                                    <Setter Property="CornerRadius" Value="3"/>
-                                </Style>
-                            </TextBox.Resources>
-                        </TextBox>
+                        <Button Style="{StaticResource MaterialDesignFlatMidBgButton}"
+                            Margin="5 0 0 0"
+                            Click="Close">
+                            <Button.Background>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                    <GradientStop Color="#FF00AFD0" Offset="0"/>
+                                    <GradientStop Color="#FF00CABD" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Button.Background>
 
-                        <Label Grid.Column="1" 
-                               FontFamily="Tahoma" 
-                               FontWeight="Bold" 
-                               Foreground="#FFC3C3C3"
-                               Margin="5 5 5 0">
-                            Опорные значения Y:
-                        </Label>
+                            <Button.Content>
+                                <materialDesign:PackIcon Kind="CloseBold"
+                                                     Foreground="WhiteSmoke"></materialDesign:PackIcon>
+                            </Button.Content>
 
-                        <TextBox Margin="5" Text="{Binding RawInputY}"
-                                 FontFamily="Tahoma" 
-                                 FontWeight="Bold" 
-                                 Height="30"
-                                 FontSize="18"
-                                 Foreground="#FFC3C3C3" Background="#FF5F5F5F"
-                                 VerticalContentAlignment="Center">
-                            <TextBox.Resources>
-                                <Style TargetType="{x:Type Border}">
-                                    <Setter Property="CornerRadius" Value="3"/>
-                                </Style>
-                            </TextBox.Resources>
-                        </TextBox>
-
-                        <Label Grid.Column="1" 
-                               FontFamily="Tahoma" 
-                               FontWeight="Bold" 
-                               Foreground="#FFC3C3C3"
-                               Margin="5 5 5 0">
-                            Шаг аппроксимирующей функции:
-                        </Label>
-
-                        <TextBox Margin="5" Text="{Binding ApproximationFunctionStep}"
-                                 FontFamily="Tahoma" 
-                                 FontWeight="Bold" 
-                                 Height="30"
-                                 FontSize="18"
-                                 Foreground="#FFC3C3C3" Background="#FF5F5F5F"
-                                 VerticalContentAlignment="Center">
-                            <TextBox.Resources>
-                                <Style TargetType="{x:Type Border}">
-                                    <Setter Property="CornerRadius" Value="3"/>
-                                </Style>
-                            </TextBox.Resources>
-                        </TextBox>
-
-                        <Label Foreground="LightCoral"
-                               Visibility="{Binding InputErrorLabelVisible}">
-                            Введены неверные данные!
-                        </Label>
-
+                        </Button>
                     </StackPanel>
-                </GroupBox>
-
-                <GroupBox Grid.Row="1" Header ="Вывод:"
-                          FontFamily="Tahoma" 
-                          FontWeight="Bold" 
-                          Foreground="#FFC3C3C3"
-                          Style="{StaticResource MaterialDesignGroupBox}">
-                    <Border>
-                        <ListView Style="{StaticResource MaterialDesignListView}"
-                                  ItemsSource="{Binding Steps}"
-                                  >
-                            
-                        </ListView>
-                    </Border>
-
-                </GroupBox>
-
-            </Grid>
-
-            <GroupBox Grid.Column="1" Grid.Row="1"
-                      Style="{StaticResource MaterialDesignGroupBox}"
-                      Header ="График"
-                      FontSize="14"
-                      FontFamily="Tahoma" 
-                      FontWeight="Bold" 
-                      Margin="5 5 5 0"
-                      Foreground="#FFC3C3C3">
-
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                    </Grid.RowDefinitions>
-
-                
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width=".5*"/>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
-
-                        <Label
-                               FontFamily="Tahoma" 
-                               FontWeight="Bold" 
-                               Foreground="#FFC3C3C3"
-                               VerticalAlignment="Center">
-                            Цвет фона:
-                        </Label>
-
-                        <Border Grid.Column="1"
-                                Margin="10"
-                                CornerRadius="10"
-                                Background="{Binding PlotBackground}"
-                                Cursor="Hand"
-                                BorderBrush="Gray"
-                                BorderThickness="2">
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="MouseDown">
-                                    <i:InvokeCommandAction Command="{Binding SelectPlotBackground}"></i:InvokeCommandAction>
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
-                        </Border>
-                    </Grid>
-
-
-                    <Button Grid.Row="1"
-                            Margin="5 5 5 -15"
-                            Style="{StaticResource MaterialDesignFlatMidBgButton}"
-                            Foreground="White"
-                            FontFamily="Tahoma" 
-                            FontWeight="Bold"
-                            Command="{Binding ProcessFunction}">
-                        <Button.Background>
-                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                                <GradientStop Color="#FF00AFD0" Offset="0"/>
-                                <GradientStop Color="#FF00CABD" Offset="1"/>
-                            </LinearGradientBrush>
-                        </Button.Background>
-
-                        <core:OutlinedTextBlock Fill="White"
-                                                FontFamily="Tahoma" 
-                                                FontWeight="Bold"
-                                                Stroke="Black"
-                                                FontSize="18">
-                            Построить график!
-                        </core:OutlinedTextBlock>
-                    </Button>
                 </Grid>
-            </GroupBox>
+            </Border>
 
-            
-            <Grid Grid.Row="1" Grid.Column="0">
+            <Grid Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="3.5*"/>
+                    <RowDefinition/>
+
+                </Grid.RowDefinitions>
+
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
+                    <ColumnDefinition Width="2.5*"/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
 
-                <GroupBox Header ="Режим"
-                    FontFamily="Tahoma" 
-                    FontWeight="Bold" 
-                    Foreground="#FFC3C3C3"
-                    FontSize="14"
-                    Margin="0 10 0 0"
-                    Style="{StaticResource MaterialDesignGroupBox}">
-                    
-                    <StackPanel Margin="5">
-                        <RadioButton Content="Интерполировать"
+                <Border Background="{Binding PlotBackground}"
+                        Margin="5"
+                        CornerRadius="10">
+                    <oxy:PlotView Background="Transparent"
+                        Model="{Binding Model}"
+                        >
+                    </oxy:PlotView>
+                </Border>
+
+                
+                <Grid Grid.Column="1" Grid.Row="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition Height=".9*"/>
+                    </Grid.RowDefinitions>
+                    <GroupBox 
+                              Header ="Задать данные:"
+                              FontFamily="Tahoma" 
+                              FontWeight="Bold" 
+                              Foreground="#FFC3C3C3"
+                              Style="{StaticResource MaterialDesignGroupBox}">
+                        <StackPanel Margin="5">
+                            <Button Margin="5"
+                                    Style="{StaticResource MaterialDesignFlatMidBgButton}"
+                                    Foreground="White"
+                                    FontFamily="Tahoma" 
+                                    FontWeight="Bold" 
+                                    Command="{Binding LoadDataFromFile}">
+                                <Button.Background>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                        <GradientStop Color="#FF00AFD0" Offset="0"/>
+                                        <GradientStop Color="#FF00CABD" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </Button.Background>
+
+                                <core:OutlinedTextBlock Fill="White"
+                                                        FontFamily="Tahoma" 
+                                                        FontWeight="Bold"
+                                                        Stroke="Black"
+                                                        FontSize="18">
+                                    Загрузить из файла
+                                </core:OutlinedTextBlock>
+                            </Button>
+                            
+                            
+                            <Label Grid.Column="1" 
+                                   FontFamily="Tahoma" 
+                                   FontWeight="Bold" 
+                                   Foreground="#FFC3C3C3"
+                                   Margin="5 5 5 0">
+                                Опорные значения X:
+                            </Label>
+
+                            <TextBox Margin="5" Text="{Binding RawInputX}"
                                      FontFamily="Tahoma" 
                                      FontWeight="Bold" 
-                                     Margin="5 5 5 0"
-                                     Foreground="#FFC3C3C3"
-                                     GroupName="ModeSelect"
-                                     IsChecked="True"
-                                     Style="{StaticResource MaterialDesignUserForegroundRadioButton}">
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="Checked">
-                                    <i:InvokeCommandAction Command="{Binding SwapProcessingModes}"
-                                                           CommandParameter="{x:Static core:ProcessingType.Interpolation}"></i:InvokeCommandAction>
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
-                        </RadioButton>
+                                     Height="30"
+                                     FontSize="18"
+                                     Foreground="#FFC3C3C3" Background="#FF5F5F5F"
+                                     VerticalContentAlignment="Center">
+                                <TextBox.Resources>
+                                    <Style TargetType="{x:Type Border}">
+                                        <Setter Property="CornerRadius" Value="3"/>
+                                    </Style>
+                                </TextBox.Resources>
+                            </TextBox>
 
-                        <RadioButton Content="Сглаживать"
+                            <Label Grid.Column="1" 
+                                   FontFamily="Tahoma" 
+                                   FontWeight="Bold" 
+                                   Foreground="#FFC3C3C3"
+                                   Margin="5 5 5 0">
+                                Опорные значения Y:
+                            </Label>
+
+                            <TextBox Margin="5" Text="{Binding RawInputY}"
                                      FontFamily="Tahoma" 
                                      FontWeight="Bold" 
-                                     Foreground="#FFC3C3C3"
-                                     GroupName="ModeSelect"
-                                     Margin="5"
-                                     Style="{StaticResource MaterialDesignUserForegroundRadioButton}">
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="Checked">
-                                    <i:InvokeCommandAction Command="{Binding SwapProcessingModes}"
-                                                           CommandParameter="{x:Static core:ProcessingType.Smoothing}"></i:InvokeCommandAction>
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
-                        </RadioButton >
+                                     Height="30"
+                                     FontSize="18"
+                                     Foreground="#FFC3C3C3" Background="#FF5F5F5F"
+                                     VerticalContentAlignment="Center">
+                                <TextBox.Resources>
+                                    <Style TargetType="{x:Type Border}">
+                                        <Setter Property="CornerRadius" Value="3"/>
+                                    </Style>
+                                </TextBox.Resources>
+                            </TextBox>
 
-                        <Label FontFamily="Tahoma" 
-                               FontWeight="Bold" 
-                               Foreground="#FFC3C3C3">
-                            Алгоритм:
-                        </Label>
+                            <Label Grid.Column="1" 
+                                   FontFamily="Tahoma" 
+                                   FontWeight="Bold" 
+                                   Foreground="#FFC3C3C3"
+                                   Margin="5 5 5 0">
+                                Шаг аппроксимирующей функции:
+                            </Label>
 
-                        <ComboBox FontFamily="Tahoma" 
-                                  FontWeight="Bold" 
-                                  Foreground="#FFC3C3C3"
-                                  Margin="5"
-                                  ItemsSource="{Binding ProcessingModes}"
-                                  SelectedItem="{Binding SelectedProcessingMode}">
-                            <ComboBox.ItemTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding Converter={StaticResource EnumToLocalizedStringConverter}}"></TextBlock>
-                                </DataTemplate>
-                            </ComboBox.ItemTemplate>
-                        </ComboBox>
-                    </StackPanel>
+                            <TextBox Margin="5" Text="{Binding ApproximationFunctionStep}"
+                                     FontFamily="Tahoma" 
+                                     FontWeight="Bold" 
+                                     Height="30"
+                                     FontSize="18"
+                                     Foreground="#FFC3C3C3" Background="#FF5F5F5F"
+                                     VerticalContentAlignment="Center">
+                                <TextBox.Resources>
+                                    <Style TargetType="{x:Type Border}">
+                                        <Setter Property="CornerRadius" Value="3"/>
+                                    </Style>
+                                </TextBox.Resources>
+                            </TextBox>
 
-                </GroupBox>
+                            <Label Foreground="LightCoral"
+                                   Visibility="{Binding InputErrorLabelVisible}">
+                                Введены неверные данные!
+                            </Label>
 
+                        </StackPanel>
+                    </GroupBox>
 
-                <GroupBox Header ="Найти в точке" Grid.Column="1"
+                    <GroupBox Grid.Row="1" Header ="Вывод:"
+                              FontFamily="Tahoma" 
+                              FontWeight="Bold" 
+                              Foreground="#FFC3C3C3"
+                              Style="{StaticResource MaterialDesignGroupBox}">
+                        <Border>
+                            <ListView Style="{StaticResource MaterialDesignListView}"
+                                      ItemsSource="{Binding Steps}"
+                                      >
+                                
+                            </ListView>
+                        </Border>
+
+                    </GroupBox>
+
+                </Grid>
+
+                <GroupBox Grid.Column="1" Grid.Row="1"
+                          Style="{StaticResource MaterialDesignGroupBox}"
+                          Header ="График"
+                          FontSize="14"
                           FontFamily="Tahoma" 
                           FontWeight="Bold" 
-                          Foreground="#FFC3C3C3"
-                          FontSize="14"
-                          Margin="5 10 5 0"
-                          Style="{StaticResource MaterialDesignGroupBox}">
-
+                          Margin="5 5 5 0"
+                          Foreground="#FFC3C3C3">
 
                     <Grid>
-
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="1.5*"/>
+                            <RowDefinition/>
                             <RowDefinition/>
                         </Grid.RowDefinitions>
 
-                        <StackPanel>
+                    
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width=".5*"/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
 
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width=".3*"/>
-                                    <ColumnDefinition/>
-                                    
-                                </Grid.ColumnDefinitions>
+                            <Label
+                                   FontFamily="Tahoma" 
+                                   FontWeight="Bold" 
+                                   Foreground="#FFC3C3C3"
+                                   VerticalAlignment="Center">
+                                Цвет фона:
+                            </Label>
 
-                                <Label FontFamily="Tahoma" 
-                                       FontWeight="Bold" 
-                                       Foreground="#FFC3C3C3"
-                                       VerticalAlignment="Center">
-                                        Задайте X:
-                                    </Label>
+                            <Border Grid.Column="1"
+                                    Margin="10"
+                                    CornerRadius="10"
+                                    Background="{Binding PlotBackground}"
+                                    Cursor="Hand"
+                                    BorderBrush="Gray"
+                                    BorderThickness="2">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="MouseDown">
+                                        <i:InvokeCommandAction Command="{Binding SelectPlotBackground}"></i:InvokeCommandAction>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </Border>
+                        </Grid>
 
-                                    <TextBox Grid.Column="1"
-                                    Margin="5" Text="{Binding DirectCalculateInput}"
-                                         FontFamily="Tahoma" 
-                                         FontWeight="Bold" 
-                                         Height="25"
-                                         FontSize="14"
-                                         Foreground="#FFC3C3C3" Background="#FF5F5F5F"
-                                         VerticalContentAlignment="Center"
-                                         >
-                                    <TextBox.Resources>
-                                        <Style TargetType="{x:Type Border}">
-                                            <Setter Property="CornerRadius" Value="3"/>
-                                        </Style>
-                                    </TextBox.Resources>
-                                </TextBox>
-                            </Grid>
-
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width=".4*"/>
-                                    <ColumnDefinition/>
-
-                                </Grid.ColumnDefinitions>
-
-                                <Label FontFamily="Tahoma" 
-                                       FontWeight="Bold" 
-                                       Foreground="#FFC3C3C3"
-                                       VerticalAlignment="Center">
-                                    Расчётный Y:
-                                </Label>
-
-                                <TextBox Grid.Column="1"
-                                         Margin="5" Text="{Binding DirectCalculateOutput}"
-                                         FontFamily="Tahoma" 
-                                         FontWeight="Bold" 
-                                         Height="25"
-                                         FontSize="14"
-                                         Foreground="#FFC3C3C3" Background="#FF5F5F5F"
-                                         VerticalContentAlignment="Center"
-                                         IsReadOnly="True">
-                                    <TextBox.Resources>
-                                        <Style TargetType="{x:Type Border}">
-                                            <Setter Property="CornerRadius" Value="3"/>
-                                        </Style>
-                                    </TextBox.Resources>
-                                </TextBox>
-                            </Grid>
-                        </StackPanel>
 
                         <Button Grid.Row="1"
-                                Margin="5 5 5 0"
+                                Margin="5 5 5 -15"
                                 Style="{StaticResource MaterialDesignFlatMidBgButton}"
                                 Foreground="White"
                                 FontFamily="Tahoma" 
-                                FontWeight="Bold" 
-                                Command="{Binding PerformDirectCalculation}">
+                                FontWeight="Bold"
+                                Command="{Binding ProcessFunction}">
                             <Button.Background>
                                 <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
                                     <GradientStop Color="#FF00AFD0" Offset="0"/>
@@ -590,17 +490,194 @@
                                                     FontWeight="Bold"
                                                     Stroke="Black"
                                                     FontSize="18">
-                                Рассчитать
+                                Построить график!
                             </core:OutlinedTextBlock>
                         </Button>
-
                     </Grid>
                 </GroupBox>
 
+                
+                <Grid Grid.Row="1" Grid.Column="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <GroupBox Header ="Режим"
+                        FontFamily="Tahoma" 
+                        FontWeight="Bold" 
+                        Foreground="#FFC3C3C3"
+                        FontSize="14"
+                        Margin="0 10 0 0"
+                        Style="{StaticResource MaterialDesignGroupBox}">
+                        
+                        <StackPanel Margin="5">
+                            <RadioButton Content="Интерполировать"
+                                         FontFamily="Tahoma" 
+                                         FontWeight="Bold" 
+                                         Margin="5 5 5 0"
+                                         Foreground="#FFC3C3C3"
+                                         GroupName="ModeSelect"
+                                         IsChecked="True"
+                                         Style="{StaticResource MaterialDesignUserForegroundRadioButton}">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="Checked">
+                                        <i:InvokeCommandAction Command="{Binding SwapProcessingModes}"
+                                                               CommandParameter="{x:Static core:ProcessingType.Interpolation}"></i:InvokeCommandAction>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </RadioButton>
+
+                            <RadioButton Content="Сглаживать"
+                                         FontFamily="Tahoma" 
+                                         FontWeight="Bold" 
+                                         Foreground="#FFC3C3C3"
+                                         GroupName="ModeSelect"
+                                         Margin="5"
+                                         Style="{StaticResource MaterialDesignUserForegroundRadioButton}">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="Checked">
+                                        <i:InvokeCommandAction Command="{Binding SwapProcessingModes}"
+                                                               CommandParameter="{x:Static core:ProcessingType.Smoothing}"></i:InvokeCommandAction>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </RadioButton >
+
+                            <Label FontFamily="Tahoma" 
+                                   FontWeight="Bold" 
+                                   Foreground="#FFC3C3C3">
+                                Алгоритм:
+                            </Label>
+
+                            <ComboBox FontFamily="Tahoma" 
+                                      FontWeight="Bold" 
+                                      Foreground="#FFC3C3C3"
+                                      Margin="5"
+                                      ItemsSource="{Binding ProcessingModes}"
+                                      SelectedItem="{Binding SelectedProcessingMode}">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Converter={StaticResource EnumToLocalizedStringConverter}}"></TextBlock>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                        </StackPanel>
+
+                    </GroupBox>
+
+
+                    <GroupBox Header ="Найти в точке" Grid.Column="1"
+                              FontFamily="Tahoma" 
+                              FontWeight="Bold" 
+                              Foreground="#FFC3C3C3"
+                              FontSize="14"
+                              Margin="5 10 5 0"
+                              Style="{StaticResource MaterialDesignGroupBox}">
+
+
+                        <Grid>
+
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="1.5*"/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+
+                            <StackPanel>
+
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width=".3*"/>
+                                        <ColumnDefinition/>
+                                        
+                                    </Grid.ColumnDefinitions>
+
+                                    <Label FontFamily="Tahoma" 
+                                           FontWeight="Bold" 
+                                           Foreground="#FFC3C3C3"
+                                           VerticalAlignment="Center">
+                                            Задайте X:
+                                        </Label>
+
+                                        <TextBox Grid.Column="1"
+                                        Margin="5" Text="{Binding DirectCalculateInput}"
+                                             FontFamily="Tahoma" 
+                                             FontWeight="Bold" 
+                                             Height="25"
+                                             FontSize="14"
+                                             Foreground="#FFC3C3C3" Background="#FF5F5F5F"
+                                             VerticalContentAlignment="Center"
+                                             >
+                                        <TextBox.Resources>
+                                            <Style TargetType="{x:Type Border}">
+                                                <Setter Property="CornerRadius" Value="3"/>
+                                            </Style>
+                                        </TextBox.Resources>
+                                    </TextBox>
+                                </Grid>
+
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width=".4*"/>
+                                        <ColumnDefinition/>
+
+                                    </Grid.ColumnDefinitions>
+
+                                    <Label FontFamily="Tahoma" 
+                                           FontWeight="Bold" 
+                                           Foreground="#FFC3C3C3"
+                                           VerticalAlignment="Center">
+                                        Расчётный Y:
+                                    </Label>
+
+                                    <TextBox Grid.Column="1"
+                                             Margin="5" Text="{Binding DirectCalculateOutput}"
+                                             FontFamily="Tahoma" 
+                                             FontWeight="Bold" 
+                                             Height="25"
+                                             FontSize="14"
+                                             Foreground="#FFC3C3C3" Background="#FF5F5F5F"
+                                             VerticalContentAlignment="Center"
+                                             IsReadOnly="True">
+                                        <TextBox.Resources>
+                                            <Style TargetType="{x:Type Border}">
+                                                <Setter Property="CornerRadius" Value="3"/>
+                                            </Style>
+                                        </TextBox.Resources>
+                                    </TextBox>
+                                </Grid>
+                            </StackPanel>
+
+                            <Button Grid.Row="1"
+                                    Margin="5 5 5 0"
+                                    Style="{StaticResource MaterialDesignFlatMidBgButton}"
+                                    Foreground="White"
+                                    FontFamily="Tahoma" 
+                                    FontWeight="Bold" 
+                                    Command="{Binding PerformDirectCalculation}">
+                                <Button.Background>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                        <GradientStop Color="#FF00AFD0" Offset="0"/>
+                                        <GradientStop Color="#FF00CABD" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </Button.Background>
+
+                                <core:OutlinedTextBlock Fill="White"
+                                                        FontFamily="Tahoma" 
+                                                        FontWeight="Bold"
+                                                        Stroke="Black"
+                                                        FontSize="18">
+                                    Рассчитать
+                                </core:OutlinedTextBlock>
+                            </Button>
+
+                        </Grid>
+                    </GroupBox>
+
+
+                </Grid>
+
 
             </Grid>
-
-
         </Grid>
     </Border>
 </Window>
