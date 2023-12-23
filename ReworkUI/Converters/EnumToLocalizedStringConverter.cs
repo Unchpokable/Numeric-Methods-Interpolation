@@ -2,6 +2,7 @@
 using System;
 using System.Globalization;
 using System.Windows.Data;
+using ReworkUI.Locale;
 
 namespace ReworkUI.Converters
 {
@@ -14,7 +15,7 @@ namespace ReworkUI.Converters
 
             try
             {
-                string result = TranslateProcessingMode(value);
+                string result = ProcessingModesTranslation.TranslateProcessingMode(value);
                 return result;
             }
             catch (Exception ex)
@@ -30,26 +31,6 @@ namespace ReworkUI.Converters
             throw new NotImplementedException();
         }
 
-        private static string TranslateProcessingMode(object type)
-        {
-            if (!type.GetType().IsEnum)
-                throw new ArgumentException("Given type must be an enum type");
-
-            switch (type)
-            {
-                case InterpolationType.Lagrange:
-                    return "Интерполяция Лагранжа";
-                case InterpolationType.Newton:
-                    return "Интерполяция Ньютона";
-                case InterpolationType.CubicSpline:
-                    return "Интерполяция Кубическим Сплайном";
-                case SmoothingType.LinearLeastSquares:
-                    return "Сглаживание Лин. методом Наим. Квадратов";
-                case SmoothingType.NonLinearLeastSquares:
-                    return "Сглаживание Нелин. методом Наим. Квадратов";
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(type), type, null);
-            }
-        }
+        
     }
 }

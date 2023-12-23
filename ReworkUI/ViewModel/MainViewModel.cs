@@ -10,6 +10,7 @@ using Microsoft.Win32;
 using OxyPlot;
 using OxyPlot.Legends;
 using ReworkUI.Core;
+using ReworkUI.Locale;
 using ReworkUI.Model;
 
 namespace ReworkUI.ViewModel
@@ -234,13 +235,14 @@ namespace ReworkUI.ViewModel
                 data = _processor.SmoothRange(smoothing);
             }
 
-            data.Title = "Аппроксимация функции в указанном диапазоне";
+            data.Title = ProcessingModesTranslation.TranslateProcessingMode(_selectedProcessingMode);
 
 
             var textColorBytes = ArgsFromHex("#FFC3C3C3");
             var textColor = OxyColor.FromArgb(textColorBytes.Item1, textColorBytes.Item2, textColorBytes.Item3, textColorBytes.Item4);
             data.TextColor = textColor;
             data.PlotAreaBorderColor = textColor;
+            data.SelectionColor = textColor;
             data.DefaultFont = "Tahoma";
             data.DefaultFontSize = 16;
 

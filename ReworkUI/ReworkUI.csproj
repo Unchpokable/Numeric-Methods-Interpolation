@@ -91,6 +91,7 @@
     <Compile Include="Core\OutlinedTextBlock.cs" />
     <Compile Include="Core\ProcessingType.cs" />
     <Compile Include="Core\RelayCommand.cs" />
+    <Compile Include="Locale\ProcessingModesTranslation.cs" />
     <Compile Include="Model\FunctionProcessor.cs" />
     <Compile Include="Service\Dialogs\ColorPickerDialog.xaml.cs">
       <DependentUpon>ColorPickerDialog.xaml</DependentUpon>
@@ -158,6 +159,7 @@
   <ItemGroup>
     <Resource Include="scatter-graph.ico" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\MaterialDesignThemes.4.9.0\build\MaterialDesignThemes.targets" Condition="Exists('..\packages\MaterialDesignThemes.4.9.0\build\MaterialDesignThemes.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
