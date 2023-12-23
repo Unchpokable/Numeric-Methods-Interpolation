@@ -213,7 +213,7 @@ namespace ReworkUI.ViewModel
             _processor.Step = ApproximationFunctionStep;
             if (selectedProcessingMode == null)
             {
-                Steps.Add("Невозможно выполнить - не выбран алгоритм аппроксимации");
+                _processor.Steps.Add("Невозможно выполнить - не выбран алгоритм аппроксимации");
                 OnPropertyChanged(nameof(Steps));
                 return;
             }
