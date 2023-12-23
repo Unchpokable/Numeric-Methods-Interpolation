@@ -224,15 +224,21 @@
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
 
-                    <Label >
+                    <StackPanel Orientation="Horizontal"
+                                HorizontalAlignment="Left">
+                        <Image Source="Resources/scatter-graph.ico"
+                               Margin="5"
+                               RenderOptions.BitmapScalingMode="Fant"/>
+
                         <Label FontFamily="Tahoma" 
                                FontWeight="Bold" 
                                Foreground="#FFC3C3C3"
                                FontSize="18"
-                               Margin="10 0 0 0">
+                               Margin="10 0 0 0"
+                               VerticalAlignment="Center">
                             Интерполяция и сглаживание
                         </Label>
-                    </Label>
+                    </StackPanel>
 
                     <StackPanel Grid.Column="1"
                             VerticalAlignment="Center"
